@@ -30,3 +30,11 @@ v5.0.3
 
 v5.0.4
 * Bring your own `fetch` implementation by passing a `fetch` parameter to the `api` function.
+
+v5.0.4
+* Bring your own `fetch` implementation by passing a `fetch` parameter to the `api` function.
+
+v5.0.5
+* Include a new option, `haltPaginationOnEmptyData`. Apple seems to have a bug in some endpoints where they include a `links.next` cursor link even if there's no more data. When crawling all pages, that will loop infinitely.
+
+    When the option to halt on empty data is set, we'll workaround Apple's bug. (I'm leaving it off by default because I think it shouldn't be necessary; I hope Apple just fixes it.)
