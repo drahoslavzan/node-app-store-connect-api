@@ -245,6 +245,7 @@ export const api = async function AppStoreConnectApiFetcher({ issuerId, apiKey, 
     async function pollForUploadSuccess(assetUrl, logHeader = "", delayInMilliseconds = 1000, maxTries = 60) {
         if (logHeader) logHeader += ' ';
         let tries = 0;
+        let state;
         while (true) {
             if (maxTries) {
                 tries++;
@@ -261,7 +262,7 @@ export const api = async function AppStoreConnectApiFetcher({ issuerId, apiKey, 
                 }
             }
             const assetDeliveryState = assetData?.attributes?.assetDeliveryState;
-            const state = assetDeliveryState?.state;
+            state = assetDeliveryState?.state;
             if (!state) throw new Error(`${logHeader}${assetUrl} couldn't find attributes.assetDeliveryState.state: ${JSON.stringify(assetData)}`);
             if (state === 'COMPLETE') return;
             if (state === 'FAILED') throw new Error(`${logHeader}${assetUrl} upload failed: ${JSON.stringify(assetDeliveryState.errors)}`);
